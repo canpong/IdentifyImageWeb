@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HighCharts</title>
+    <!-- 引入 highcharts.js -->
+    <!--<script src="highcharts.js"></script>
+     <script src="jquery-1.11.3.min.js"></script>-->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+</head>
+<body>
+    <!-- 为HighCharts准备一个具备大小（宽高）的Dom -->
+   <div id="container" style="min-width:400px;height:400px"></div>
+   <script type="text/javascript">
+    
+    $(document).ready(function(){
+    	var obj = jQuery.parseJSON('{"name":"John"}');  
+    	alert( obj.name === "John" );  
+    	
+        $.ajax({  
+            url: 'http://localhost:8080/ImageIdentifyWeb/chartsServlet',  
+            type: 'GET',  
+            dataType: 'json',  
+            timeout: 1000,  
+            cache: false,  
+            beforeSend: LoadFunction, //加载执行方法    
+            //error: erryFunction,  //错误执行方法    
+            //success: succFunction //成功执行方法    
+        });  
+        function LoadFunction() {  
+            alert('before send');
+       }  /*
+       function erryFunction() {  
+             alert("error");  
+       }  
+       function succFunction(tt) {  
+             $("#list").html('');  
+  
+             //eval将字符串转成对象数组  
+             //var json = { "id": "10086", "uname": "zhangsan", "email": "zhangsan@qq.com" };  
+             //json = eval(json);  
+             //alert("===json:id=" + json.id + ",uname=" + json.uname + ",email=" + json.email);  
+  
+             var json = eval(tt); //数组         
+             $.each(json, function (index, item) {  
+                 //循环获取数据    
+                 var name = json[index].Name;  
+                 var idnumber = json[index].IdNumber;  
+                 var sex = json[index].Sex;  
+                 $("#list").html($("#list").html() + "<br>" + name + " - " + idnumber + " - " + sex + "<br/>");  
+      		 });  
+       } */
+        
+  /*   	htmlobj=$.ajax({
+    		url:'http://localhost:8080/ImageIdentifyWeb/chartsServlet',
+    		async:false
+    	}); */
+  	   // alert(htmlobj.responseText);
+    });
+    
+    
+    var date = ['2017-05-19','2017-05-18','2017-05-17','2017-05-16','2017-05-15','2017-05-12','2017-05-11','2017-05-10','2017-05-09','2017-05-08','2017-05-05','2017-05-04'];
+    var price = [279.06,279.59,277.42,276.51,276.04,275.26,274.05,273.70,275.02,275.31,275.65,276.04];
+    $(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '价格'
+        },
+        subtitle: {
+            text: '数据来源: AliPay.com'
+        },
+        xAxis: {
+            categories: date
+        },
+        yAxis: {
+            title: {
+                text: '价格(元)'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true          // 开启数据标签
+                },
+                enableMouseTracking: false // 关闭鼠标跟踪，对应的提示框、点击事件会失效
+            }
+        },
+        series: [{
+            name: '时间',
+            data: price
+        }]
+    });
+});
+
+    </script>
+</body>
+</html>
